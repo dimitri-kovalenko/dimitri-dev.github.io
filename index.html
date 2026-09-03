@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Professional portfolio and services — replace the placeholder details with your own.">
+  <title>DIMITRI — Creative Professional</title>
+
+  <style>
+    :root{
+      --bg:#0b0b0a;
+      --bg-soft:#121210;
+      --card:#171714;
+      --text:#f4f1e9;
+      --muted:#aaa69c;
+      --line:rgba(244,241,233,.14);
+      --gold:#c9a86a;
+      --gold-light:#e1c98f;
+      --max:1200px;
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button{font:inherit}
+
+    .noise{
+      position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:100;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    }
+
+    .container{width:min(calc(100% - 40px),var(--max));margin:auto}
+    .eyebrow{
+      display:flex;align-items:center;gap:12px;
+      color:var(--gold-light);font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+      margin-bottom:20px;
+    }
+    .eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
+
+    header{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      border-bottom:1px solid transparent;
+      transition:.3s ease;
+    }
+    header.scrolled{
+      background:rgba(11,11,10,.82);
+      backdrop-filter:blur(18px);
+      border-color:var(--line);
+    }
+    .nav{
+      height:82px;display:flex;align-items:center;justify-content:space-between;
+    }
+    .logo{
+      font-size:18px;font-weight:700;letter-spacing:.2em;
+    }
+    .logo span{color:var(--gold)}
+    nav{display:flex;gap:30px}
+    nav a{
+      color:#d4d0c7;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+      transition:.2s;
+    }
+    nav a:hover{color:var(--gold-light)}
+    .nav-cta{
+      border:1px solid var(--line);padding:11px 18px;border-radius:999px;
+    }
+
+    .hero{
+      min-height:100svh;display:flex;align-items:center;position:relative;
+      background:
+        radial-gradient(circle at 75% 35%,rgba(201,168,106,.16),transparent 28%),
+        radial-gradient(circle at 10% 80%,rgba(255,255,255,.04),transparent 30%),
+        linear-gradient(120deg,#090909 0%,#11110f 55%,#0b0b0a 100%);
+    }
+    .hero::after{
+      content:"";position:absolute;right:5%;top:18%;width:360px;height:360px;
+      border:1px solid rgba(201,168,106,.18);border-radius:50%;
+      box-shadow:0 0 100px rgba(201,168,106,.06);
+    }
+    .hero-content{position:relative;z-index:2;max-width:850px;padding-top:90px}
+    h1{
+      font-family:Georgia,"Times New Roman",serif;
+      font-weight:400;font-size:clamp(58px,9vw,125px);line-height:.9;
+      letter-spacing:-.055em;margin-bottom:32px;
+    }
+    h1 em{font-style:italic;color:var(--gold-light)}
+    .hero-copy{max-width:600px;color:var(--muted);font-size:18px}
+    .hero-actions{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      min-height:50px;padding:0 24px;border-radius:999px;border:1px solid var(--line);
+      text-transform:uppercase;letter-spacing:.1em;font-size:11px;transition:.25s;
+    }
+    .btn.primary{background:var(--text);color:#111;border-color:var(--text)}
+    .btn:hover{transform:translateY(-2px);border-color:var(--gold)}
+    .hero-meta{
+      position:absolute;bottom:35px;left:0;right:0;
+      display:flex;justify-content:space-between;color:#77746d;font-size:11px;
+      letter-spacing:.14em;text-transform:uppercase;
+    }
+
+    section{padding:130px 0}
+    .section-head{display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:55px}
+    .section-title{
+      font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,6vw,76px);
+      line-height:.95;font-weight:400;letter-spacing:-.04em;
+    }
+    .section-intro{max-width:390px;color:var(--muted);font-size:15px}
+
+    .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:70px}
+    .about-main{font-family:Georgia,"Times New Roman",serif;font-size:clamp(27px,3.4vw,44px);line-height:1.18}
+    .about-main strong{font-weight:400;color:var(--gold-light)}
+    .details{display:grid;grid-template-columns:1fr 1fr;gap:30px;border-top:1px solid var(--line);padding-top:25px}
+    .detail h3{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+    .detail p{color:var(--muted);font-size:14px}
+
+    .work{background:var(--bg-soft)}
+    .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .project{
+      min-height:390px;padding:30px;position:relative;overflow:hidden;
+      border:1px solid var(--line);border-radius:var(--radius);
+      display:flex;flex-direction:column;justify-content:flex-end;
+      background:
+        radial-gradient(circle at 75% 25%,rgba(201,168,106,.18),transparent 30%),
+        linear-gradient(145deg,#191916,#0f0f0d);
+      transition:.35s;
+    }
+    .project:nth-child(2){background:radial-gradient(circle at 25% 25%,rgba(255,255,255,.08),transparent 25%),linear-gradient(145deg,#171715,#0d0d0c)}
+    .project:nth-child(3){background:radial-gradient(circle at 75% 70%,rgba(201,168,106,.12),transparent 30%),linear-gradient(145deg,#141412,#090909)}
+    .project:nth-child(4){background:radial-gradient(circle at 30% 70%,rgba(255,255,255,.06),transparent 25%),linear-gradient(145deg,#181815,#0d0d0c)}
+    .project:hover{transform:translateY(-5px);border-color:rgba(201,168,106,.45)}
+    .project-number{position:absolute;top:25px;right:28px;color:#6d6a63;font-size:12px}
+    .project-type{font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:var(--gold-light);margin-bottom:10px}
+    .project h3{font-family:Georgia,serif;font-weight:400;font-size:36px;line-height:1;margin-bottom:10px}
+    .project p{color:#96928a;font-size:14px;max-width:430px}
+
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .service{
+      padding:32px;border:1px solid var(--line);border-radius:var(--radius);
+      background:linear-gradient(160deg,#151513,#0d0d0c);
+    }
+    .service-top{display:flex;justify-content:space-between;gap:15px;margin-bottom:65px}
+    .service-number{color:var(--gold);font-size:11px}
+    .service h3{font-family:Georgia,serif;font-size:29px;font-weight:400;margin-bottom:12px}
+    .service p{color:var(--muted);font-size:14px;min-height:68px}
+    .price{margin-top:25px;padding-top:20px;border-top:1px solid var(--line);font-size:22px}
+    .price small{font-family:Inter,sans-serif;font-size:10px;color:#77736b;text-transform:uppercase;letter-spacing:.12em}
+
+    .pricing{background:#e8e3d8;color:#141412}
+    .pricing .eyebrow{color:#6d5936}.pricing .eyebrow::before{background:#8f7141}
+    .pricing .section-intro{color:#69665e}
+    .price-list{border-top:1px solid rgba(20,20,18,.22)}
+    .price-row{
+      display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:30px;
+      padding:28px 0;border-bottom:1px solid rgba(20,20,18,.22);
+    }
+    .price-row .num{font-size:11px;color:#77736b}
+    .price-row h3{font-family:Georgia,serif;font-weight:400;font-size:28px}
+    .price-row p{color:#6f6b63;font-size:13px;margin-top:3px}
+    .amount{font-size:20px;white-space:nowrap}
+
+    .contact{padding-bottom:80px}
+    .contact-box{
+      border:1px solid var(--line);border-radius:30px;padding:60px;
+      display:grid;grid-template-columns:1.3fr .7fr;gap:60px;
+      background:radial-gradient(circle at 80% 10%,rgba(201,168,106,.14),transparent 30%);
+    }
+    .contact-box h2{
+      font-family:Georgia,serif;font-size:clamp(45px,6vw,80px);font-weight:400;line-height:.95;
+    }
+    .contact-box h2 em{color:var(--gold-light);font-style:italic}
+    .contact-list{display:flex;flex-direction:column;gap:24px;justify-content:center}
+    .contact-item span{display:block;color:#716e66;text-transform:uppercase;letter-spacing:.15em;font-size:10px;margin-bottom:5px}
+    .contact-item a,.contact-item p{font-size:16px;color:#e4e0d7}
+    .contact-item a:hover{color:var(--gold-light)}
+
+    footer{padding:25px 0 40px;border-top:1px solid var(--line);color:#66635c;font-size:11px}
+    .footer-inner{display:flex;justify-content:space-between;gap:20px;text-transform:uppercase;letter-spacing:.1em}
+
+    @media(max-width:800px){
+      .container{width:min(calc(100% - 28px),var(--max))}
+      nav{display:none}
+      .nav-cta{display:block}
+      .hero::after{width:220px;height:220px;right:-80px;top:25%}
+      .hero-meta{font-size:9px}
+      section{padding:90px 0}
+      .section-head{display:block;margin-bottom:38px}
+      .section-intro{margin-top:20px}
+      .about-grid,.contact-box{grid-template-columns:1fr;gap:45px}
+      .details{margin-top:10px}
+      .projects,.services-grid{grid-template-columns:1fr}
+      .project{min-height:330px}
+      .price-row{grid-template-columns:35px 1fr;gap:12px}
+      .amount{grid-column:2}
+      .contact-box{padding:35px 25px}
+      .footer-inner{flex-direction:column}
+    }
+
+    @media(max-width:480px){
+      h1{font-size:58px}
+      .hero-copy{font-size:16px}
+      .details{grid-template-columns:1fr}
+      .project h3{font-size:30px}
+      .service-top{margin-bottom:45px}
+      .price-row h3{font-size:23px}
+    }
+
+    .reveal{opacity:0;transform:translateY(25px);transition:opacity .8s ease,transform .8s ease}
+    .reveal.visible{opacity:1;transform:none}
+  </style>
+</head>
+
+<body>
+  <div class="noise"></div>
+
+  <header id="header">
+    <div class="container nav">
+      <a class="logo" href="#top">DIMITRI<span>.</span></a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#prices">Prices</a>
+      </nav>
+      <a class="nav-cta" href="#contact">Let's talk</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-content reveal">
+        <div class="eyebrow">Independent professional · Israel</div>
+        <h1>Ideas.<br><em>Craft.</em><br>Impact.</h1>
+        <p class="hero-copy">
+          I help people and businesses turn ideas into polished digital experiences,
+          creative projects and practical solutions — with a focus on quality, detail and results.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#work">Explore my work ↗</a>
+          <a class="btn" href="#contact">Contact me</a>
+        </div>
+      </div>
+
+      <div class="container hero-meta">
+        <span>Available for selected projects</span>
+        <span>Scroll to explore ↓</span>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">01 — About</div>
+            <h2 class="section-title">A little<br>about me.</h2>
+          </div>
+          <p class="section-intro">
+            Replace this section with your real story. Keep it personal, confident and specific.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <p class="about-main">
+            I'm <strong>Dimitri</strong> — a curious, hands-on professional who enjoys
+            technology, creative work, gaming, fitness and building things from the ground up.
+            I combine a practical mindset with an eye for presentation and detail.
+          </p>
+
+          <div class="details">
+            <div class="detail">
+              <h3>Experience</h3>
+              <p>Technical support, IT, customer-facing work, digital projects and independent creative work.</p>
+            </div>
+            <div class="detail">
+              <h3>Based in</h3>
+              <p>Israel · Available for remote and local projects.</p>
+            </div>
+            <div class="detail">
+              <h3>Interests</h3>
+              <p>Technology, gaming, content creation, design, music, fitness and learning.</p>
+            </div>
+            <div class="detail">
+              <h3>Approach</h3>
+              <p>Clean execution, direct communication and no unnecessary complexity.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="work">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">02 — Selected work</div>
+            <h2 class="section-title">What I<br>do.</h2>
+          </div>
+          <p class="section-intro">
+            A selection of services and project types. Replace these cards with your actual portfolio.
+          </p>
+        </div>
+
+        <div class="projects">
+          <article class="project">
+            <span class="project-number">01</span>
+            <div class="project-type">Digital</div>
+            <h3>Websites & Landing Pages</h3>
+            <p>Modern, responsive websites designed to look premium and communicate clearly.</p>
+          </article>
+
+          <article class="project">
+            <span class="project-number">02</span>
+            <div class="project-type">Content</div>
+            <h3>Short-Form Content</h3>
+            <p>Concepts, edits and visual direction for engaging TikTok, Reels and YouTube Shorts.</p>
+          </article>
+
+          <article class="project">
+            <span class="project-number">03</span>
+            <div class="project-type">Creative</div>
+            <h3>Visual Design</h3>
+            <p>Clean graphics, social assets, thumbnails and visual identities for personal brands.</p>
+          </article>
+
+          <article class="project">
+            <span class="project-number">04</span>
+            <div class="project-type">Technology</div>
+            <h3>IT & Technical Help</h3>
+            <p>Practical technical support, setup guidance and problem-solving for individuals and small businesses.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">03 — Services</div>
+            <h2 class="section-title">Built around<br>your needs.</h2>
+          </div>
+          <p class="section-intro">
+            Simple packages make it easy to understand what you get. Customize the names and prices below.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service">
+            <div class="service-top"><span>01</span><span class="service-number">STARTER</span></div>
+            <h3>Landing Page</h3>
+            <p>A polished one-page website with responsive design and clear calls to action.</p>
+            <div class="price">₪900 <small>from</small></div>
+          </article>
+
+          <article class="service">
+            <div class="service-top"><span>02</span><span class="service-number">CREATIVE</span></div>
+            <h3>Content Package</h3>
+            <p>Short-form editing and visual assets designed for social media growth.</p>
+            <div class="price">₪600 <small>from</small></div>
+          </article>
+
+          <article class="service">
+            <div class="service-top"><span>03</span><span class="service-number">TECH</span></div>
+            <h3>Technical Session</h3>
+            <p>One-on-one technical troubleshooting, setup and practical guidance.</p>
+            <div class="price">₪250 <small>per session</small></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="prices" class="pricing">
+      <div class="container reveal">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">04 — Pricing</div>
+            <h2 class="section-title">Clear<br>pricing.</h2>
+          </div>
+          <p class="section-intro">
+            Starting prices are shown for transparency. Final pricing can change depending on scope and complexity.
+          </p>
+        </div>
+
+        <div class="price-list">
+          <div class="price-row">
+            <span class="num">01</span>
+            <div><h3>Personal Website</h3><p>Single-page premium portfolio</p></div>
+            <span class="amount">₪900+</span>
+          </div>
+          <div class="price-row">
+            <span class="num">02</span>
+            <div><h3>Business Website</h3><p>Multi-section professional website</p></div>
+            <span class="amount">₪1,800+</span>
+          </div>
+          <div class="price-row">
+            <span class="num">03</span>
+            <div><h3>Short Video Edit</h3><p>Reels / Shorts / TikTok</p></div>
+            <span class="amount">₪120+</span>
+          </div>
+          <div class="price-row">
+            <span class="num">04</span>
+            <div><h3>Technical Consultation</h3><p>Up to 60 minutes</p></div>
+            <span class="amount">₪250</span>
+          </div>
+          <div class="price-row">
+            <span class="num">05</span>
+            <div><h3>Custom Project</h3><p>Let's discuss your requirements</p></div>
+            <span class="amount">Custom</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container reveal">
+        <div class="contact-box">
+          <div>
+            <div class="eyebrow">05 — Contact</div>
+            <h2>Have an idea?<br><em>Let's make it real.</em></h2>
+            <div class="hero-actions">
+              <a class="btn primary" href="mailto:your@email.com">Email me ↗</a>
+              <a class="btn" href="tel:+972500000000">Call me</a>
+            </div>
+          </div>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <span>Email</span>
+              <a href="mailto:your@email.com">your@email.com</a>
+            </div>
+            <div class="contact-item">
+              <span>Phone</span>
+              <a href="tel:+972500000000">+972 50-000-0000</a>
+            </div>
+            <div class="contact-item">
+              <span>Instagram</span>
+              <a href="https://instagram.com/yourusername" target="_blank" rel="noopener">@yourusername</a>
+            </div>
+            <div class="contact-item">
+              <span>TikTok</span>
+              <a href="https://tiktok.com/@yourusername" target="_blank" rel="noopener">@yourusername</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© 2026 Dimitri. All rights reserved.</span>
+      <span>Designed with intention.</span>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById("header");
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 30);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
